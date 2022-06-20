@@ -28,6 +28,13 @@ public class MaintanenceMonitorServiceTest {
     public void uptimeTest() {
         service.start();
         service.changeStatus("up");
+        // wait for .8 seconds
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         assertEquals(1, service.getUptime());
         // check uptime after 3 seconds
         try {
