@@ -19,8 +19,8 @@ public class MaintanenceMonitorServiceTest {
     // test change methods
     @Test
     public void changeTest() {
-        service.changeStatus("down");
-        service.changeMessage("Test");
+        service.setStatus("down");
+        service.setMessage("Test");
         assertEquals("System is down", service.getStatus());
         assertEquals("Test", service.getMessage());
     }
@@ -28,7 +28,7 @@ public class MaintanenceMonitorServiceTest {
     @Test
     public void uptimeTest() {
         service.start();
-        service.changeStatus("up");
+        service.setStatus("up");
         // wait for .8 seconds
         try {
             Thread.sleep(800);
@@ -50,7 +50,7 @@ public class MaintanenceMonitorServiceTest {
     @Test
     public void downtimeTest() {
         service.start();
-        service.changeStatus("down");
+        service.setStatus("down");
         // wait for one second
         try {
             Thread.sleep(800);
@@ -77,7 +77,7 @@ public class MaintanenceMonitorServiceTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        service.changeStatus("down");
+        service.setStatus("down");
         // wait for one second
         try {
             Thread.sleep(800);
