@@ -38,13 +38,13 @@ public class MaintanenceMonitorService {
     }
 
     // read downtime
-    public int getDowntime() {
-        return state.getDowntime();
+    public String getDowntime() {
+        return convertTimestamp(state.getDowntime());
     }
 
     // read uptime
-    public int getUptime() {
-        return state.getUptime();
+    public String getUptime() {
+        return convertTimestamp(state.getUptime());
     }
 
     // read status
@@ -65,6 +65,25 @@ public class MaintanenceMonitorService {
     // reset message
     public void resetMessage() {
         state.setMessage("");
+    }
+
+    // read calculated uptime percentage
+    public double getUptimePercentage() {
+        return (double) state.getUptime() / (double) (state.getUptime() + state.getDowntime());
+    }
+
+    // return boolean if system is up
+    public boolean isUp() {
+        return state.getStatus().equals("System is up");
+    }
+
+    // convert timestamp from seconds to readable time
+    private String convertTimestamp(int timestamp) {
+        int seconds = timestamp % 60;
+        int minutes = (timestamp / 60) % 60;
+        int hours = (timestamp / 3600) % 24;
+        int days = timestamp / 86400;
+        return String.format("%dd %02dh %02dm %02ds", days, hours, minutes, seconds);
     }
 
 }
