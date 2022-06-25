@@ -28,7 +28,7 @@ public class MaintanenceMonitorService {
     }
 
     // change status on
-    public void changeStatus(String status) {
+    public void setStatus(String status) {
         //validate status
         if (status.equals("up")) {
             state.setStatus("System is " + status);
@@ -58,7 +58,7 @@ public class MaintanenceMonitorService {
     }
 
     // set message
-    public void changeMessage(String message) {
+    public void setMessage(String message) {
         state.setMessage(message);
     }
 
