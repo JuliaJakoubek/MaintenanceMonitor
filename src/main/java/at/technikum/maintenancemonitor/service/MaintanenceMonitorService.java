@@ -8,13 +8,15 @@ import java.util.TimerTask;
 @Service
 public class MaintanenceMonitorService {
     // instantiate state
-    private State state = new State();
+    private final State state = new State();
     // instantiate Timer
-    private Timer timer = new Timer();
+    private final Timer timer = new Timer();
 
     // if status is up, count uptime up by 1 every second
     // if status is down, count downtime up by 1 every second
     public void start() {
+        state.setUptime(0);
+        state.setDowntime(0);
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -25,6 +27,10 @@ public class MaintanenceMonitorService {
                 }
             }
         }, 0, 1000);
+    }
+
+    public MaintanenceMonitorService() {
+        start();
     }
 
     // change status on
@@ -38,13 +44,13 @@ public class MaintanenceMonitorService {
     }
 
     // read downtime
-    public int getDowntime() {
-        return state.getDowntime();
+    public String getDowntime() {
+        return convertTimestamp(state.getDowntime());
     }
 
     // read uptime
-    public int getUptime() {
-        return state.getUptime();
+    public String getUptime() {
+        return convertTimestamp(state.getUptime());
     }
 
     // read status
@@ -65,6 +71,27 @@ public class MaintanenceMonitorService {
     // reset message
     public void resetMessage() {
         state.setMessage("");
+    }
+
+    // read calculated uptime percentage
+    public String getUptimePercentage() {
+
+        double percantage = (double) state.getUptime() / (double) (state.getUptime() + state.getDowntime());
+        // transform percentage to string
+        return String.format("%2.2f", percantage * 100) + "%";
+    }
+    // return boolean if system is up
+    public boolean isUp() {
+        return state.getStatus().equals("System is up");
+    }
+
+    // convert timestamp from seconds to readable time
+    private String convertTimestamp(int timestamp) {
+        int seconds = timestamp % 60;
+        int minutes = (timestamp / 60) % 60;
+        int hours = (timestamp / 3600) % 24;
+        int days = timestamp / 86400;
+        return String.format("%dd %02dh %02dm %02ds", days, hours, minutes, seconds);
     }
 
 }

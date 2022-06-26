@@ -3,6 +3,7 @@ package at.technikum.maintenancemonitor.service;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MaintanenceMonitorServiceTest {
     MaintanenceMonitorService service = new MaintanenceMonitorService();
@@ -10,8 +11,8 @@ public class MaintanenceMonitorServiceTest {
     // check if the constructor works
     @Test
     public void constructorTest() {
-        assertEquals(0, service.getUptime());
-        assertEquals(0, service.getDowntime());
+        // expects time in format "%dd %02dh %02dm %02ds"
+        assertEquals("0d 00h 00m 00s", service.getDowntime());
         assertEquals("System is up", service.getStatus());
         assertEquals("", service.getMessage());
     }
@@ -23,47 +24,48 @@ public class MaintanenceMonitorServiceTest {
         assertEquals("System is down", service.getStatus());
         assertEquals("Test", service.getMessage());
     }
-    // test if uptime is counting up
+    // test if uptime is counting up expects result in format "%dd %02dh %02dm %02ds"
     @Test
     public void uptimeTest() {
-        service.start();
         service.changeStatus("up");
+        String current = service.getUptime();
         // wait for .8 seconds
         try {
-            Thread.sleep(800);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        assertEquals(1, service.getUptime());
-        // check uptime after 3 seconds
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertEquals(4, service.getUptime());
+
+        assertTrue(service.getUptime().compareTo(current) > 0);
     }
 
     // test if downtime is counting up
     @Test
     public void downtimeTest() {
-        service.start();
         service.changeStatus("down");
+
+        String current = service.getDowntime();
         // wait for one second
         try {
-            Thread.sleep(800);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(1, service.getDowntime());
-        // check downtime after 3 seconds
+        assertTrue(service.getDowntime().compareTo(current) > 0);
+    }
+
+    // test that uptime stops counting when status is changed to down
+    @Test
+    public void uptimeStopTest() {
+        service.changeStatus("down");
+        String current = service.getUptime();
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(4, service.getDowntime());
+        assertTrue(service.getUptime().compareTo(current) == 0);
     }
 
     // test reset messages
@@ -72,6 +74,5 @@ public class MaintanenceMonitorServiceTest {
         service.resetMessage();
         assertEquals("", service.getMessage());
     }
-
 
 }

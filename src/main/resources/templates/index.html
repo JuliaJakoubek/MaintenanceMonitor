@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script>
+        window.setInterval('refresh()', 5000);
+
+        function refresh() {
+            window.location.reload();
+        }
+    </script>
+    <style>
+        .main {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .container {
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            justify-self: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 500px;
+            background-color: #e7e7e7;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container .card h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .container .card .message {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: indianred;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 3rem;
+        }
+
+        .container .card p {
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .container.main.up {
+            background-color: chartreuse;
+        }
+
+        .container.main.down {
+            background-color: red;
+        }
+
+        .card> .container {
+            border-bottom: 1px dashed #4f4e4e;
+        }
+    </style>
+    <title>Title</title>
+</head>
+<body>
+<div class="container main" th:classappend="${service.isUp() ? 'up' : 'down'}">
+    <div class="card">
+        <div class="container">
+
+            <h1 th:text="${service.getStatus()}"></h1>
+        </div>
+        <div class="container" th:if="${service.getMessage().length() > 0}">
+            <p class="message" th:text="${service.getMessage()}"></p>
+        </div>
+        <div class="container" th:if="${service.isUp()}">
+            <p th:text="${service.getUptime()}"></p>
+            <p th:text="${'SLA: ' + service.getUptimePercentage()}"></p>
+        </div>
+        <div class="container" th:if="${!service.isUp()}">
+            <p th:text="${service.getDowntime()}"></p>
+            <p th:text="${'SLA: ' + service.getUptimePercentage()}"></p>
+        </div>
+
+    </div>
+</body>
+</html>

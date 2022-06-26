@@ -25,7 +25,7 @@ public class State {
 
     public void setUptime(int uptime) {
         // validate uptime
-        if (uptime > 0) {
+        if (uptime >= 0) {
             this.uptime = uptime;
         }
     }
@@ -36,7 +36,7 @@ public class State {
 
     public void setDowntime(int downtime) {
         // validate downtime
-        if (downtime > 0) {
+        if (downtime >= 0) {
             this.downtime = downtime;
         }
     }
