@@ -27,7 +27,6 @@ public class MaintanenceMonitorServiceTest {
     // test if uptime is counting up expects result in format "%dd %02dh %02dm %02ds"
     @Test
     public void uptimeTest() {
-        service.start();
         service.changeStatus("up");
         // wait for .8 seconds
         try {
@@ -43,17 +42,16 @@ public class MaintanenceMonitorServiceTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals("0d 00h 00m 07s", service.getUptime());
+        assertEquals("0d 00h 00m 04s", service.getUptime());
     }
 
     // test if downtime is counting up
     @Test
     public void downtimeTest() {
-        service.start();
         service.changeStatus("down");
         // wait for one second
         try {
-            Thread.sleep(800);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -64,20 +62,18 @@ public class MaintanenceMonitorServiceTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals("0d 00h 00m 07s", service.getDowntime());
+        assertEquals("0d 00h 00m 04s", service.getDowntime());
     }
 
     // test that uptime stops counting when status is changed to down
     @Test
     public void uptimeStopTest() {
-        service.start();
-        // wait for one second
+        service.changeStatus("down");
         try {
             Thread.sleep(800);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        service.changeStatus("down");
         // wait for one second
         try {
             Thread.sleep(800);
