@@ -8,13 +8,15 @@ import java.util.TimerTask;
 @Service
 public class MaintanenceMonitorService {
     // instantiate state
-    private State state = new State();
+    private final State state = new State();
     // instantiate Timer
-    private Timer timer = new Timer();
+    private final Timer timer = new Timer();
 
     // if status is up, count uptime up by 1 every second
     // if status is down, count downtime up by 1 every second
     public void start() {
+        state.setUptime(0);
+        state.setDowntime(0);
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -25,6 +27,10 @@ public class MaintanenceMonitorService {
                 }
             }
         }, 0, 1000);
+    }
+
+    public MaintanenceMonitorService() {
+        start();
     }
 
     // change status on
@@ -68,10 +74,12 @@ public class MaintanenceMonitorService {
     }
 
     // read calculated uptime percentage
-    public double getUptimePercentage() {
-        return (double) state.getUptime() / (double) (state.getUptime() + state.getDowntime());
-    }
+    public String getUptimePercentage() {
 
+        double percantage = (double) state.getUptime() / (double) (state.getUptime() + state.getDowntime());
+        // transform percentage to string
+        return String.format("%2.2f", percantage * 100) + "%";
+    }
     // return boolean if system is up
     public boolean isUp() {
         return state.getStatus().equals("System is up");
