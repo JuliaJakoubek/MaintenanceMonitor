@@ -32,11 +32,11 @@
         .card {
             width: 100%;
             max-width: 500px;
-            background-color: #d3d3d3;
+            background-color: #e7e7e7;
             margin: auto;
             padding: 20px;
-            border-radius: 2px;
-            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -75,7 +75,7 @@
         }
 
         .card> .container {
-            border-bottom: 1px solid #4f4e4e;
+            border-bottom: 1px dashed #4f4e4e;
         }
     </style>
     <title>Title</title>
@@ -83,7 +83,10 @@
 <body>
 <div class="container main" th:classappend="${service.isUp() ? 'up' : 'down'}">
     <div class="card">
-        <h1 th:text="${service.getStatus()}"></h1>
+        <div class="container">
+
+            <h1 th:text="${service.getStatus()}"></h1>
+        </div>
         <div class="container" th:if="${service.getMessage().length() > 0}">
             <p class="message" th:text="${service.getMessage()}"></p>
         </div>
@@ -93,7 +96,7 @@
         </div>
         <div class="container" th:if="${!service.isUp()}">
             <p th:text="${service.getDowntime()}"></p>
-
+            <p th:text="${'SLA: ' + service.getUptimePercentage()}"></p>
         </div>
 
     </div>
