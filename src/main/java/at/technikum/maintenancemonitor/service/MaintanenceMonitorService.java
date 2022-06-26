@@ -15,6 +15,8 @@ public class MaintanenceMonitorService {
     // if status is up, count uptime up by 1 every second
     // if status is down, count downtime up by 1 every second
     public void start() {
+        state.setUptime(0);
+        state.setDowntime(0);
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
