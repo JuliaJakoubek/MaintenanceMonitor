@@ -19,16 +19,17 @@ public class MaintanenceMonitorServiceTest {
     // test change methods
     @Test
     public void changeTest() {
-        service.changeStatus("down");
-        service.changeMessage("Test");
+        service.setStatus("down");
+        service.setMessage("Test");
         assertEquals("System is down", service.getStatus());
         assertEquals("Test", service.getMessage());
     }
     // test if uptime is counting up expects result in format "%dd %02dh %02dm %02ds"
     @Test
     public void uptimeTest() {
-        service.changeStatus("up");
+        service.setStatus("up");
         String current = service.getUptime();
+      
         // wait for .8 seconds
         try {
             Thread.sleep(1000);
@@ -43,8 +44,7 @@ public class MaintanenceMonitorServiceTest {
     // test if downtime is counting up
     @Test
     public void downtimeTest() {
-        service.changeStatus("down");
-
+        service.setStatus("down");
         String current = service.getDowntime();
         // wait for one second
         try {
@@ -58,8 +58,9 @@ public class MaintanenceMonitorServiceTest {
     // test that uptime stops counting when status is changed to down
     @Test
     public void uptimeStopTest() {
-        service.changeStatus("down");
+        service.setStatus("down");
         String current = service.getUptime();
+      
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
