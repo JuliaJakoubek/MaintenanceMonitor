@@ -11,7 +11,7 @@ public class MaintanenceMonitorServiceTest {
     @Test
     public void constructorTest() {
         // expects time in format "%dd %02dh %02dm %02ds"
-        assertEquals("0d 00h 00m 01s", service.getUptime());
+        assertEquals("0d 00h 00m 00s", service.getUptime());
         assertEquals("0d 00h 00m 00s", service.getDowntime());
         assertEquals("System is up", service.getStatus());
         assertEquals("", service.getMessage());
@@ -55,7 +55,7 @@ public class MaintanenceMonitorServiceTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals("0d 00h 00m 01s", service.getDowntime());
+        assertEquals("0d 00h 00m 02s", service.getDowntime());
         // check downtime after 3 seconds
         try {
             Thread.sleep(3000);
@@ -80,7 +80,7 @@ public class MaintanenceMonitorServiceTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals("0d 00h 00m 01s", service.getUptime());
+        assertEquals("0d 00h 00m 00s", service.getUptime());
     }
 
     // test reset messages
