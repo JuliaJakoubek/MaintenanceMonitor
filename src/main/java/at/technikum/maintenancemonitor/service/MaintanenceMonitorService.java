@@ -8,9 +8,9 @@ import java.util.TimerTask;
 @Service
 public class MaintanenceMonitorService {
     // instantiate state
-    private State state = new State();
+    private final State state = new State();
     // instantiate Timer
-    private Timer timer = new Timer();
+    private final Timer timer = new Timer();
 
     // if status is up, count uptime up by 1 every second
     // if status is down, count downtime up by 1 every second

@@ -11,7 +11,7 @@ public class MaintanenceMonitorServiceTest {
     @Test
     public void constructorTest() {
         // expects time in format "%dd %02dh %02dm %02ds"
-        assertEquals("0d 00h 00m 00s", service.getUptime());
+        assertEquals("0d 00h 00m 01s", service.getUptime());
         assertEquals("0d 00h 00m 00s", service.getDowntime());
         assertEquals("System is up", service.getStatus());
         assertEquals("", service.getMessage());
@@ -43,7 +43,7 @@ public class MaintanenceMonitorServiceTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals("0d 00h 00m 04s", service.getUptime());
+        assertEquals("0d 00h 00m 07s", service.getUptime());
     }
 
     // test if downtime is counting up
@@ -64,7 +64,7 @@ public class MaintanenceMonitorServiceTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals("0d 00h 00m 04s", service.getDowntime());
+        assertEquals("0d 00h 00m 07s", service.getDowntime());
     }
 
     // test that uptime stops counting when status is changed to down
