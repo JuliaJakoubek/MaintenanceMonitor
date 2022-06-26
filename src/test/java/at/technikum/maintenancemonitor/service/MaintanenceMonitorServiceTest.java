@@ -27,7 +27,7 @@ public class MaintanenceMonitorServiceTest {
     // test if uptime is counting up expects result in format "%dd %02dh %02dm %02ds"
     @Test
     public void uptimeTest() {
-        service.changeStatus("up");
+        service.setStatus("up");
         String current = service.getUptime();
       
         // wait for .8 seconds
@@ -44,7 +44,7 @@ public class MaintanenceMonitorServiceTest {
     // test if downtime is counting up
     @Test
     public void downtimeTest() {
-        service.changeStatus("down");
+        service.setStatus("down");
         String current = service.getDowntime();
         // wait for one second
         try {
@@ -58,7 +58,7 @@ public class MaintanenceMonitorServiceTest {
     // test that uptime stops counting when status is changed to down
     @Test
     public void uptimeStopTest() {
-        service.changeStatus("down");
+        service.setStatus("down");
         String current = service.getUptime();
       
         try {
