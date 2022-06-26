@@ -17,7 +17,7 @@ public class StateControllerTests {
         HttpURLConnection httpURLConnection;
         try{
             httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setRequestMethod("POST");
         } catch(Exception e){
             System.out.print("Not on localhost, therefore tests disabled");
             return;

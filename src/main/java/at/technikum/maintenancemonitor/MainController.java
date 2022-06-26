@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
-abstract class MainController {
+@Controller
+public class MainController {
     // This abstract class creates and manages a state with the "service" layer.
     // Extend it to create the main controller which should implement the Requestmappings.
 

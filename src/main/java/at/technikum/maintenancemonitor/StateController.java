@@ -1,18 +1,20 @@
 package at.technikum.maintenancemonitor;
 
+import at.technikum.maintenancemonitor.service.MaintanenceMonitorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Timer;
-import java.util.TimerTask;
 
 @RestController
-public class StateController extends MainController {
+public class StateController {
 
+    @Autowired
+    MaintanenceMonitorService service;
     //Sets status with Request with method from Superclass
-    @RequestMapping("/status/set")
-    public void setStatus(@RequestParam(name = "status") String status){
-        super.service.setStatus(status);
+    @PostMapping("/status/set")
+    public String setStatus(@RequestParam(name = "status") String status){
+        service.setStatus(status);
+        return "Status set to: " + status;
     }
 }
