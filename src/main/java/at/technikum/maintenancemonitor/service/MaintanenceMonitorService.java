@@ -27,6 +27,10 @@ public class MaintanenceMonitorService {
         }, 0, 1000);
     }
 
+    public MaintanenceMonitorService() {
+        start();
+    }
+
     // change status on
     public void changeStatus(String status) {
         //validate status
@@ -68,10 +72,12 @@ public class MaintanenceMonitorService {
     }
 
     // read calculated uptime percentage
-    public double getUptimePercentage() {
-        return (double) state.getUptime() / (double) (state.getUptime() + state.getDowntime());
-    }
+    public String getUptimePercentage() {
 
+        double percantage = (double) state.getUptime() / (double) (state.getUptime() + state.getDowntime());
+        // transform percentage to string
+        return String.format("%2.2f", percantage * 100) + "%";
+    }
     // return boolean if system is up
     public boolean isUp() {
         return state.getStatus().equals("System is up");
