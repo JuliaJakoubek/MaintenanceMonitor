@@ -9,6 +9,7 @@ import java.util.TimerTask;
 
 @RestController
 public class StateController extends MainController {
+
     //Sets status with Request with method from Superclass
     @RequestMapping("/status/set")
     public void setStatus(@RequestParam(name = "status") String status){
