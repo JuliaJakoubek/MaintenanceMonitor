@@ -15,7 +15,8 @@ public class MainController {
     // Extend it to create the main controller which should implement the Requestmappings.
 
    @Autowired
-    MaintanenceMonitorService service;
+   protected
+   MaintanenceMonitorService service;
 
     @GetMapping("/")
     public String index(Model model) {
