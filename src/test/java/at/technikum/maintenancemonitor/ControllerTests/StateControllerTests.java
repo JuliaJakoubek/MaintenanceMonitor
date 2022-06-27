@@ -55,6 +55,7 @@ public class StateControllerTests {
         sc.resetMessage();
         assertEquals("Message was reset.", sc.service.getMessage());
     }
+
     @Test
     void testSetMessage() throws Exception{
         sc.setMessage("The implementation was correct.");

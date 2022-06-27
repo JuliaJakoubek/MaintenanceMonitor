@@ -23,6 +23,7 @@ public class StateController {
         service.resetMessage();
         return "Message was reset.";
     }
+
     @PostMapping("/status/message")
     public String setMessage(@RequestParam(name = "message") String message){
         service.setMessage(message);
