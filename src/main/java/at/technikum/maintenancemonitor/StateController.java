@@ -18,13 +18,11 @@ public class StateController {
         service.setStatus(status);
         return "Status set to: " + status;
     }
-
     @PostMapping("/status/message/reset")
     public String resetMessage(){
         service.resetMessage();
         return "Message was reset.";
     }
-
     @PostMapping("/status/message")
     public String setMessage(@RequestParam(name = "message") String message){
         service.setMessage(message);
