@@ -18,6 +18,7 @@ public class StateControllerTests {
     @Autowired
     public StateController sc;
 
+    // Test if the status is set to "System is up"
     @Test
     void testSetState() throws IOException {
         sc.setStatus("System is down");
