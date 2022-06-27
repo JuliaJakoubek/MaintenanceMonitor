@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StateController {
 
     @Autowired
+    public
     MaintanenceMonitorService service;
     //Sets status with Request with method from Superclass
     @PostMapping("/status/set")
@@ -17,4 +18,17 @@ public class StateController {
         service.setStatus(status);
         return "Status set to: " + status;
     }
+
+    @PostMapping("/status/message/reset")
+    public String resetMessage(){
+        service.resetMessage();
+        return "Message was reset.";
+    }
+
+    @PostMapping("/status/message")
+    public String setMessage(@RequestParam(name = "message") String message){
+        service.setMessage(message);
+        return "Message set to: " + message;
+    }
+
 }
