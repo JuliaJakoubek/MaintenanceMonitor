@@ -2,12 +2,15 @@ package at.technikum.maintenancemonitor;
 
 import at.technikum.maintenancemonitor.service.MaintanenceMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
-public abstract class MainController {
+@Controller
+public class MainController {
     // This abstract class creates and manages a state with the "service" layer.
     // Extend it to create the main controller which should implement the Requestmappings.
 
@@ -15,13 +18,13 @@ public abstract class MainController {
    protected
    MaintanenceMonitorService service;
 
-    @RequestMapping("/")
-    public ModelAndView start() {
+    @GetMapping("/")
+    public String index(Model model) {
         // ModelAndView model contains the attributes passed to the HTML.
         // They are accessible in the HTML file using the name of the attribute.
-        ModelAndView mav = new ModelAndView("index");
-        mav.addObject("state", service);
+        model.addAttribute("title", "Maintenance Monitor");
+        model.addAttribute("service", service);
 
-        return mav;
+        return "index";
     }
 }
