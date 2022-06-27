@@ -1,44 +1,71 @@
 package at.technikum.maintenancemonitor.ControllerTests;
 import at.technikum.maintenancemonitor.StateController;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import at.technikum.maintenancemonitor.service.MaintanenceMonitorService;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
+@RunWith(SpringRunner.class)
+@WebMvcTest({StateController.class})
 public class StateControllerTests {
+
     @Autowired
-    public StateController sc;
+    private MockMvc mockMvc;
 
-    // Test if the status is set to "System is up"
+    @MockBean
+    private MaintanenceMonitorService service;
+
     @Test
-    void testSetState() throws IOException {
-        sc.setStatus("System is down");
-        assertEquals("System is down", sc.service.getStatus());
+    public void testStateUp() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/status/set")
+                        .param("status", "up")
+        ).andExpect(status().isOk()).andExpect(content().string("Status set to: up"));
 
-        sc.setStatus("System is up");
-        assertEquals("System is up", sc.service.getStatus());
     }
 
     @Test
-    void testResetMessage() throws Exception{
-        sc.setMessage("testing the reset function.");
-        sc.resetMessage();
-        assertEquals("Message was reset.", sc.service.getMessage());
+    public void testStateDown() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/status/set")
+                        .param("status", "down")
+        ).andExpect(status().isOk()).andExpect(content().string("Status set to: down"));
+
     }
 
     @Test
-    void testSetMessage() throws Exception{
-        sc.setMessage("The implementation was correct.");
-        assertEquals("The implementation was correct.", sc.service.getMessage());
+    public void testStateInvalid() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/status/set")
+                        .param("status", "invalid")
+        ).andExpect(status().isOk()).andExpect(content().string("Status set to: invalid"));
+
     }
+
+    @Test
+    public void testMessageReset() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/status/message/reset")
+        ).andExpect(status().isOk()).andExpect(content().string("Message was reset."));
+
+    }
+
+    @Test
+    public void testMessageSet() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/status/message")
+                        .param("message", "Test")
+        ).andExpect(status().isOk()).andExpect(content().string("Message set to: Test"));
+
+    }
+
+
 
 }
